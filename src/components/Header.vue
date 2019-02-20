@@ -1,0 +1,39 @@
+<template>
+<div>
+  <v-navigation-drawer
+          v-model="drawer"
+          fixed
+          right
+          app
+  >
+    <v-list dense>
+      <v-list-tile @click="">
+        <v-list-tile-action>
+          <v-icon>home</v-icon>
+        </v-list-tile-action>
+        <v-list-tile-content>
+          <v-list-tile-title>Home</v-list-tile-title>
+        </v-list-tile-content>
+      </v-list-tile>
+    </v-list>
+  </v-navigation-drawer>
+  <v-toolbar color="cyan" dark fixed app>
+    <v-spacer></v-spacer>
+    <v-toolbar-title>Vuexcart</v-toolbar-title>
+    <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+  </v-toolbar>
+</div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      drawer: false
+    }
+  }
+}
+</script>
+
+<style scoped>
+</style>
