@@ -19,7 +19,10 @@
   </v-navigation-drawer>
   <v-toolbar color="cyan" dark fixed app>
     <v-spacer></v-spacer>
-    <v-toolbar-title>Vuexcart</v-toolbar-title>
+    <v-toolbar-title class="title">
+      <span @click="showPanel">Vuexcard</span>
+      <v-btn round small color="primary" dark class="notification-btn pulse" v-if="!visibleNotificationBtn && !wasChecked" @click="showPanel">You have updates</v-btn>
+    </v-toolbar-title>
     <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
   </v-toolbar>
 </div>
@@ -27,13 +30,57 @@
 
 <script>
 export default {
-  data() {
-    return {
-      drawer: false
+  computed: {
+    drawer() {
+      return  false;
+    },
+    visibleNotificationBtn() {
+      return this.$store.getters.expanded;
+    },
+    wasChecked() {
+      return this.$store.getters.wasChecked;
+    }
+  },
+  methods: {
+    showPanel() {
+      this.$store.dispatch('changePanelVisibility', true);
+      if(!this.wasChecked) {
+        this.$store.dispatch('makeChecked', true);
+      }
     }
   }
 }
 </script>
 
 <style scoped>
+  .title {
+    position: relative;
+    overflow: visible;
+    cursor: pointer;
+  }
+  .notification-btn {
+    position: absolute;
+    top: 0px;
+    left: -96px;
+    margin: 0;
+    font-size: 8px;
+    height: 12px;
+  }
+  .pulse {
+    box-shadow: 0 0 0 rgba(204,169,44, 0.4);
+    animation: shadow-pulse 1s 3;
+  }
+  .pulse:hover {
+    animation: none;
+  }
+
+  @keyframes shadow-pulse
+  {
+    0% {
+      box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
+    }
+    100% {
+      box-shadow: 0 0 0 15px rgba(0, 0, 0, 0);
+    }
+  }
 </style>
